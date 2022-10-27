@@ -28,10 +28,7 @@ module motor_cutoff() {
     translate([0,0,motor_tiefe/2-1]) cube([motor_breite+offset_motor, 
                             motor_breite+offset_motor, 
                             motor_tiefe+offset_motor], center=true);
-    translate([motor_breite/2+motor_anschluss_tiefe/2,0,5]) 
-                        cube([motor_anschluss_tiefe, 
-                            motor_anschluss_breite,
-                            motor_anschluss_hoehe+offset_motor], center=true);
+    translate([0,0,-3]) cylinder(h=6, d=25, center=true);
 }
 
 module bodenplatte_bodenhalter() {
@@ -51,13 +48,17 @@ module bodenplatte_bodenhalter() {
 }
 
 module connector() {
+    //screw mount
+    translate([0,23.25,11.5]) cube([10,3.5,13], center=true);
+    translate([0,-23.25,11.5]) cube([10,3.5,13], center=true);
+
     difference() {
-        translate([0,30,2.5]) cube([10,10,5], center=true);
-        translate([0,30,0]) cylinder(h=12, d=4, center=true);
+        translate([0,30,2.5+13]) cube([10,10,5], center=true);
+        translate([0,30,2.5+13]) cylinder(h=12, d=4, center=true);
     }
     difference() {
-        translate([0,-30,2.5]) cube([10,10,5], center=true);
-        translate([0,-30,0]) cylinder(h=12, d=4, center=true);
+        translate([0,-30,2.5+13]) cube([10,10,5], center=true);
+        translate([0,-30,2.5+13]) cylinder(h=12, d=4, center=true);
     }
 }
 
@@ -66,11 +67,6 @@ module bodenplatte(){
        cube([bodenplatte_breite, bodenplatte_breite, bodenplatte_tiefe],center=true);
         motor_cutoff();
     }
-    
-    translate([-33,-33,-4]) rotate([0,0,45]) bodenplatte_bodenhalter();
-    translate([33,33,-4]) rotate([0,0,-135]) bodenplatte_bodenhalter();
-    translate([33,-33,-4]) rotate([0,0,135]) bodenplatte_bodenhalter();
-    translate([-33,33,-4]) rotate([0,0,-45]) bodenplatte_bodenhalter();
     connector();
 }
 
